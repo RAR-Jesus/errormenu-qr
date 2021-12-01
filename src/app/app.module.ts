@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { environment } from '../environments/environment';
-
-// import * as AngularFireModule from '@angular/fire';
-// import { AngularFireModule } from '@angular/fire';
-
+import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { Auth as FirebaseAuth } from 'firebase/auth';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { FlashMessagesModule } from 'angular2-flash-messages';
+import { FormsModule } from '@angular/forms';
+import {AngularFirestoreModule,Settings} from '@angular/fire/compat/firestore';
 
 import { AppComponent } from './app.component';
 import { CabeceroComponent } from './componentes/cabecero/cabecero.component';
@@ -17,6 +21,8 @@ import { ConfiguracionComponent } from './componentes/configuracion/configuracio
 import { NoEncontradoComponent } from './componentes/no-encontrado/no-encontrado.component';
 import { PiePaginaComponent } from './componentes/pie-pagina/pie-pagina.component';
 import { AppRoutingModule } from './app-routing.module';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { ClienteService } from './servicios/cliente.service';
 
 @NgModule({
   declarations: [
@@ -29,14 +35,18 @@ import { AppRoutingModule } from './app-routing.module';
     RegistroComponent,
     ConfiguracionComponent,
     NoEncontradoComponent,
-    PiePaginaComponent
+    PiePaginaComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule, 
     AppRoutingModule,
-
+    AngularFireModule.initializeApp(environment.firebase, 'mimenu-qr'),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    FormsModule,
+    FlashMessagesModule.forRoot()
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ClienteService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
